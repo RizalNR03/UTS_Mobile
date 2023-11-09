@@ -20,30 +20,34 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Currency Converter'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: DropdownButton<String>(
-                value: dropdownValue,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownValue = newValue!;
-                  });
-                },
-                items: <String>['USD', 'EUR', 'JPY', 'GBP']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
+            SizedBox(height: 20),
+            DropdownButton<String>(
+              isExpanded: true,
+              value: dropdownValue,
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue!;
+                });
+              },
+              items: <String>['USD', 'EUR', 'JPY', 'GBP']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                );
+              }).toList(),
             ),
+            SizedBox(height: 20),
             TextField(
               onChanged: (value) {
                 amountToConvert = double.tryParse(value) ?? 0.0;
@@ -51,6 +55,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 hintText: 'Enter amount',
+                border: OutlineInputBorder(),
               ),
             ),
             SizedBox(height: 20),
@@ -82,6 +87,10 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                 }
               },
               child: Text('Convert'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+                padding: EdgeInsets.symmetric(vertical: 15.0),
+              ),
             ),
           ],
         ),

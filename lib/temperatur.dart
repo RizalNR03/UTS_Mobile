@@ -33,12 +33,19 @@ class TempState extends State<TempApp> {
       },
       decoration: InputDecoration(
         labelText: "Masukan Suhu di ${fOrC ? "Celsius" : "Fahrenheit"}",
+        border: OutlineInputBorder(),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       ),
       textAlign: TextAlign.center,
     );
 
     AppBar appBar = AppBar(
-      title: Text("Temperature Calculator"),
+      title: Text(
+        "Temperature Calculator",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      centerTitle: true,
+      backgroundColor: Colors.blue,
     );
 
     Container tempSwitch = Container(
@@ -46,7 +53,10 @@ class TempState extends State<TempApp> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text("Fahrenheit"),
+          Text(
+            "Fahrenheit",
+            style: TextStyle(fontSize: 16),
+          ),
           Radio<bool?>(
             groupValue: fOrC,
             value: false,
@@ -56,7 +66,10 @@ class TempState extends State<TempApp> {
               });
             },
           ),
-          Text("Celsius"),
+          Text(
+            "Celsius",
+            style: TextStyle(fontSize: 16),
+          ),
           Radio<bool?>(
             groupValue: fOrC,
             value: true,
@@ -71,8 +84,16 @@ class TempState extends State<TempApp> {
     );
 
     Container calcBtn = Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 16),
       child: ElevatedButton(
-        child: Text("Calculate"),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.blue,
+        ),
+        child: Text(
+          "Calculate",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
         onPressed: () {
           setState(() {
             if (fOrC) {
@@ -87,12 +108,22 @@ class TempState extends State<TempApp> {
               children: [
                 fOrC
                     ? Text(
-                        "${input.toStringAsFixed(2)} C : ${output.toStringAsFixed(2)} F")
+                        "${input.toStringAsFixed(2)} C : ${output.toStringAsFixed(2)} F",
+                        style: TextStyle(fontSize: 16),
+                      )
                     : Text(
-                        "${input.toStringAsFixed(2)} F : ${output.toStringAsFixed(2)} C"),
+                        "${input.toStringAsFixed(2)} F : ${output.toStringAsFixed(2)} C",
+                        style: TextStyle(fontSize: 16),
+                      ),
                 SizedBox(height: 10),
-                Text("Reamur: ${(output * 4 / 5).toStringAsFixed(2)} R"),
-                Text("Kelvin: ${(output + 273.15).toStringAsFixed(2)} K"),
+                Text(
+                  "Reamur: ${(output * 4 / 5).toStringAsFixed(2)} R",
+                  style: TextStyle(fontSize: 16),
+                ),
+                Text(
+                  "Kelvin: ${(output + 273.15).toStringAsFixed(2)} K",
+                  style: TextStyle(fontSize: 16),
+                ),
               ],
             ),
           );
@@ -108,7 +139,9 @@ class TempState extends State<TempApp> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
+            SizedBox(height: 20),
             inputField,
+            SizedBox(height: 20),
             tempSwitch,
             SizedBox(height: 20),
             calcBtn,

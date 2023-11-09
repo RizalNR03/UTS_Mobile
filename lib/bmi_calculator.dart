@@ -32,17 +32,19 @@ class BmiCalculationPage extends HookWidget {
   Widget build(BuildContext context) {
     final weightValue = useState(60.0);
     final heightValue = useState(170.0);
+    final genderValue = useState('Male');
 
     void updateBmi({
       required double weight,
       required double height,
+      required String gender,
       required TextEditingController bmiController,
     }) {
       final bmi = BmiCalculator().calculateBMI(weight, height);
       if (bmi != null) {
         final formatted = BmiCalculator().formattedBmi(bmi);
         final category = BmiCalculator().getBmiCategory(bmi);
-        bmiController.text = '$formatted - $category';
+        bmiController.text = '$formatted - $category - $gender';
       } else {
         bmiController.text = 'BMI is null';
       }
@@ -53,11 +55,43 @@ class BmiCalculationPage extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('BMI Calculator'),
+        centerTitle: true,
       ),
       body: Container(
         padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Gender'),
+                DropdownButton<String>(
+                  value: genderValue.value,
+                  onChanged: (String? newValue) {
+                    genderValue.value = newValue!;
+                    updateBmi(
+                      weight: weightValue.value,
+                      height: heightValue.value,
+                      gender: genderValue.value,
+                      bmiController: bmiController,
+                    );
+                  },
+                  items: <String>['Male', 'Female']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -75,8 +109,10 @@ class BmiCalculationPage extends HookWidget {
               onChangeEnd: (_) => updateBmi(
                   weight: weightValue.value,
                   height: heightValue.value,
+                  gender: genderValue.value,
                   bmiController: bmiController),
             ),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -94,11 +130,16 @@ class BmiCalculationPage extends HookWidget {
               onChangeEnd: (_) => updateBmi(
                   weight: weightValue.value,
                   height: heightValue.value,
+                  gender: genderValue.value,
                   bmiController: bmiController),
             ),
+            SizedBox(height: 20),
             TextField(
               controller: bmiController,
-              decoration: InputDecoration(labelText: 'BMI'),
+              decoration: InputDecoration(
+                labelText: 'BMI',
+                border: OutlineInputBorder(),
+              ),
               readOnly: true,
             ),
           ],

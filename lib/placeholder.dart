@@ -11,34 +11,34 @@ class PlaceholderWidget extends StatefulWidget {
 }
 
 class _PlaceholderWidgetState extends State<PlaceholderWidget> {
-  List<charts.Series<LinearSales, String>> _createSampleData(
-      List<LinearSales> data) {
+  List<charts.Series<LinearNilai, String>> _createSampleData(
+      List<LinearNilai> data) {
     return [
-      charts.Series<LinearSales, String>(
-        id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.day,
-        measureFn: (LinearSales sales, _) => sales.sales,
+      charts.Series<LinearNilai, String>(
+        id: 'Nilai',
+        domainFn: (LinearNilai Nilai, _) => Nilai.hari,
+        measureFn: (LinearNilai Nilai, _) => Nilai.Nilai,
         data: data,
       )
     ];
   }
 
-  List<LinearSales> _data = [
-    LinearSales('Mon', 5),
-    LinearSales('Tue', 25),
-    LinearSales('Wed', 100),
-    LinearSales('Thu', 75),
+  List<LinearNilai> _data = [
+    LinearNilai('Mon', 5),
+    LinearNilai('Tue', 25),
+    LinearNilai('Wed', 100),
+    LinearNilai('Thu', 75),
   ];
 
-  TextEditingController _dayController = TextEditingController();
-  TextEditingController _salesController = TextEditingController();
+  TextEditingController _hariController = TextEditingController();
+  TextEditingController _NilaiController = TextEditingController();
 
   void _addData() {
     setState(() {
-      _data.add(LinearSales(
-          _dayController.text, int.tryParse(_salesController.text) ?? 0));
-      _dayController.clear();
-      _salesController.clear();
+      _data.add(LinearNilai(
+          _hariController.text, int.tryParse(_NilaiController.text) ?? 0));
+      _hariController.clear();
+      _NilaiController.clear();
     });
   }
 
@@ -62,12 +62,12 @@ class _PlaceholderWidgetState extends State<PlaceholderWidget> {
         ),
         SizedBox(height: 20),
         TextField(
-          controller: _dayController,
-          decoration: InputDecoration(hintText: 'Day'),
+          controller: _hariController,
+          decoration: InputDecoration(hintText: 'Hari'),
         ),
         TextField(
-          controller: _salesController,
-          decoration: InputDecoration(hintText: 'Sales'),
+          controller: _NilaiController,
+          decoration: InputDecoration(hintText: 'Nilai'),
           keyboardType: TextInputType.number,
         ),
         ElevatedButton(
@@ -82,9 +82,9 @@ class _PlaceholderWidgetState extends State<PlaceholderWidget> {
   }
 }
 
-class LinearSales {
-  final String day;
-  final int sales;
+class LinearNilai {
+  final String hari;
+  final int Nilai;
 
-  LinearSales(this.day, this.sales);
+  LinearNilai(this.hari, this.Nilai);
 }
